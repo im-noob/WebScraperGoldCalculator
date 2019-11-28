@@ -2,7 +2,7 @@
 
 @section('content')
    
-    <form action="Employee" method="post">
+    <form action="employees" method="post">
         @csrf
         @method('POST')
         

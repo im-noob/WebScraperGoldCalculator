@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Goutte\Client;
 use Twilio\Rest\Client as TwilioClient;
-use App\EmployeeModel;
 use Illuminate\Support\Facades\DB;
 
 class GoldCalcController extends Controller
@@ -72,7 +71,7 @@ class GoldCalcController extends Controller
             $this->sendMessage('Hello current INR value is '.$INRvalueIN1USD.' and Gold value is '.$INRto1gGold,'+91'.$value);
         }
 
-        return redirect()->route('Employee.index')->with('success','Message Sent to selected users.');
+        return redirect()->route('employees.index')->with('success','Message Sent to selected users.');
         
     }
 

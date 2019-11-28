@@ -27,14 +27,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::middleware('auth')->group(function () {
-    // Route::get('GoldCalc_1USD', 'GoldCalcController@getINRto1USD');
-    // Route::get('GoldCalc_10gGold', 'GoldCalcController@getINRto10gGOLD');
-
-
-
-
-    Route::resource('Employee','EmployeeController');
     
+    Route::resource('employees','employeesController');
+
     Route::get('Create', function () {
         return view('Create');
     });
@@ -48,3 +43,4 @@ Route::middleware('auth')->group(function () {
     Route::post('sendMessageToUser','GoldCalcController@sendMessageToUser');
 
 });
+

@@ -45,7 +45,7 @@
                                   </div>
                                   <div class="modal-body">
                                     
-                                    <form method="POST" action="{{ url('Employee') }}/{{$item->id}} ">
+                                    <form method="POST" action="{{ url('employees') }}/{{$item->id}} ">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-group row">
@@ -99,8 +99,8 @@
 
                     {{-- START:Delete Button --}}
                     <th>
-                        <form method="POST" action="{{url('/Employee')}}/{{$item->id}}"> 
-                          @method('DELETE')
+                        <form method="POST" action="{{url('/employees')}}/{{$item->id}}"> 
+                          @method("DELETE")
                           @csrf
                           <button type="submit" class="btn btn-danger">Delete</button>
                         </form>

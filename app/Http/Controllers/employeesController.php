@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\EmployeeModel;
+use App\employees;
 use Illuminate\Http\Request;
 
-class EmployeeController extends Controller
+class employeesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('List',["data"=>EmployeeModel::all()]);
+        return view('employees',["data"=>employees::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        echo "create";
+        //
     }
 
     /**
@@ -35,7 +35,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-
         //Checking Validation 
         $request->validate([
             'first_name' => 'required',
@@ -44,7 +43,7 @@ class EmployeeController extends Controller
             'phone' => 'nullable|numeric',
         ]);
 
-        $employee = new EmployeeModel;
+        $employee = new employees;
 
         $employee->first_name = $request->first_name;
         $employee->last_name = $request->last_name;
@@ -53,17 +52,16 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-        return redirect()->route('Employee.index')->with('success','Inserted Record Successfully.');
-
+        return redirect()->route('employees.index')->with('success','Inserted Record Successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\EmployeeModel  $employeeModel
+     * @param  \App\employees  $employees
      * @return \Illuminate\Http\Response
      */
-    public function show(EmployeeModel $employeeModel)
+    public function show(employees $employees)
     {
         //
     }
@@ -71,10 +69,10 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\EmployeeModel  $employeeModel
+     * @param  \App\employees  $employees
      * @return \Illuminate\Http\Response
      */
-    public function edit(EmployeeModel $employeeModel)
+    public function edit(employees $employees)
     {
         //
     }
@@ -83,11 +81,12 @@ class EmployeeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\EmployeeModel  $employeeModel
+     * @param  \App\employees  $employees
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EmployeeModel $employeeModel)
+    public function update(Request $request, employees $employees,$id)
     {
+
         //Checking Validation 
         $request->validate([
             'first_name' => 'required',
@@ -96,28 +95,29 @@ class EmployeeController extends Controller
             'phone' => 'nullable',
         ]);
 
+        $employees = $employees::find($id);
 
-        $employeeModel->first_name = $request->first_name;
-        $employeeModel->last_name = $request->last_name;
-        $employeeModel->email = $request->email;
-        $employeeModel->phone = $request->phone;
+        $employees->first_name = $request->first_name;
+        $employees->last_name = $request->last_name;
+        $employees->email = $request->email;
+        $employees->phone = $request->phone;
 
-        $employeeModel->save();
+        $employees->save();
 
-        return redirect()->route('Employee.index')->with('success','Record Updated Successfully.');
-
+        return redirect()->route('employees.index')->with('success','Record Updated Successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\EmployeeModel  $employeeModel
+     * @param  \App\employees  $employees
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EmployeeModel $employeeModel)
+    public function destroy(employees $employees,$id)
     {
-        echo($employeeModel->delete());
+        $employees = $employees::find($id);
+        $employees->delete();
 
-        return redirect()->route('Employee.index')->with('success','Deleted SuccessFully.');
+        return redirect()->route('employees.index')->with('success','Deleted SuccessFully.');
     }
 }
