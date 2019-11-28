@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return view('List',["data"=>EmployeeModel::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        echo "create";
     }
 
     /**
@@ -35,7 +35,26 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //Checking Validation 
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|numeric',
+        ]);
+
+        $employee = new EmployeeModel;
+
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->email = $request->email;
+        $employee->phone = $request->phone;
+
+        $employee->save();
+
+        return redirect()->route('Employee.index')->with('success','Inserted Record Successfully.');
+
     }
 
     /**
@@ -69,7 +88,24 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, EmployeeModel $employeeModel)
     {
-        //
+        //Checking Validation 
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'nullable|email',
+            'phone' => 'nullable',
+        ]);
+
+
+        $employeeModel->first_name = $request->first_name;
+        $employeeModel->last_name = $request->last_name;
+        $employeeModel->email = $request->email;
+        $employeeModel->phone = $request->phone;
+
+        $employeeModel->save();
+
+        return redirect()->route('Employee.index')->with('success','Record Updated Successfully.');
+
     }
 
     /**
@@ -80,6 +116,8 @@ class EmployeeController extends Controller
      */
     public function destroy(EmployeeModel $employeeModel)
     {
-        //
+        echo($employeeModel->delete());
+
+        return redirect()->route('Employee.index')->with('success','Deleted SuccessFully.');
     }
 }
