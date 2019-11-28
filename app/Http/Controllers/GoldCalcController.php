@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Goutte\Client;
+use Twilio\Rest\Client as TwilioClient;
 
 class GoldCalcController extends Controller
 {
@@ -25,5 +27,25 @@ class GoldCalcController extends Controller
         //removing , and converting to float
         $INR_10g_Gold_R = floatval (str_replace(",","",$INR_10g_Gold));
         return($INR_10g_Gold_R);
+    }
+    public function sendMessageToUser(){
+        if($this->sendMessage('Hi','+918340669783')){
+            echo "Message Sent";
+        }
+    }
+    private function sendMessage($message, $recipients)
+    {
+        $account_sid = getenv("TWILIO_SID");
+        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_number = getenv("TWILIO_NUMBER");
+        $client = new TwilioClient($account_sid, $auth_token);
+        try {
+            $client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message]);
+            return(true);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return(false);
+        }
+        
     }
 }

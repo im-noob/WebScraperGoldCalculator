@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('GoldCalc_1USD', 'GoldCalcController@getINRto1USD');
 Route::get('GoldCalc_10gGold', 'GoldCalcController@getINRto10gGOLD');
+Route::get('sendMessageToUser','GoldCalcController@sendMessageToUser');
